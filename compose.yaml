@@ -1,0 +1,21 @@
+services:
+  api:
+    build:
+      context: .
+      target: development
+    restart: always
+    env_file:
+      - ./.env
+    ports:
+      - ${HOST_PORT}:${PORT}
+    environment:
+      - MYSQL_HOST=db
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+  db:
+    image: mysql:9.7
+    restart: always

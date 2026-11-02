@@ -1,6 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\scripts",
+    "\\src"
   ],
+  "SelectedNode": "\\compose.yaml",
   "PreviewInSolutionExplorer": false
 }
