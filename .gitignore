@@ -1,2 +1,24 @@
+# Variáveis de ambiente e segredos
+.env
+.env.*
+!.env.example
+!.env.tests
 
-/src/generated/prisma
+# Dependências
+node_modules/
+
+# Arquivos compilados
+dist/
+build/
+
+# Prisma Client gerado
+/src/generated/prisma/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Arquivos do sistema e editor
+.DS_Store
+Thumbs.db
+.vscode/
