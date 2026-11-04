@@ -3,19 +3,30 @@ services:
     build:
       context: .
       target: development
-    restart: always
     env_file:
       - ./.env
     ports:
-      - ${HOST_PORT}:${PORT}
+      - "3333:3333"
     environment:
-      - MYSQL_HOST=db
+      PORT: 3333
+      DATABASE_URL: ${DATABASE_URL_DOCKER}
     depends_on:
-      - db
-    volumes:
-      - .:/app
-      - /app/node_modules
+      db:
+        condition: service_healthy
 
   db:
-    image: mysql:9.7
-    restart: always
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: smartnotes
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -p$$MYSQL_ROOT_PASSWORD"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  mysql_data:
