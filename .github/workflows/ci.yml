@@ -1,0 +1,33 @@
+name: CI - SmartNotes
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar codigo
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Verificar TypeScript
+        run: npm run typecheck
+
+      - name: Executar ESLint
+        run: npm run lint
+
+      - name: Compilar projeto
+        run: npm run build
